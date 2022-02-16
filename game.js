@@ -1,3 +1,5 @@
+
+
 var Prizes = {
     GOAT: 0,
     CAR: 1
@@ -24,12 +26,25 @@ class Game {
     constructor() {
         let carDoor = Math.floor(Math.random() * 3);
         this.#doors[carDoor] = Prizes.CAR;
-        this.#revealedDoor = (carDoor + (Math.random() * 2)) % 2
     }
 
     pickDoor(door) {
+        const getRevealedDoor = () => {
+            const options = [
+                {key: 0, prize: this.#doors[0]},
+                {key: 1, prize: this.#doors[1]},
+                {key: 2, prize: this.#doors[2]}
+            ];
+            let filtered =
+                options
+                    .filter(door => door.key !== this.#pickedDoor)
+                    .filter(door => door.prize !== Prizes.CAR);
+
+            return filtered[0].key;
+        };
         if(this.#pickedDoor === null) {
             this.#pickedDoor = door;
+            this.#revealedDoor = getRevealedDoor();
             return this.#revealedDoor;
         }
         throw new Error("You can only pick the door for the first time once. Use change ")
@@ -54,3 +69,7 @@ class Game {
     }
 
 }
+exports.Game = Game;
+exports.Doors = Doors;
+exports.Prizes = Prizes;
+exports.GameState = GameState;
