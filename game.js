@@ -21,7 +21,7 @@ var Doors = {
 class Game {
     #doors = [Prizes.GOAT, Prizes.GOAT, Prizes.GOAT];
     #pickedDoor = null;
-    #revealedDoor;
+    revealedDoor;
     #state = GameState.PLAYING;
     constructor() {
         let carDoor = Math.floor(Math.random() * 3);
@@ -44,8 +44,8 @@ class Game {
         };
         if(this.#pickedDoor === null) {
             this.#pickedDoor = door;
-            this.#revealedDoor = getRevealedDoor();
-            return this.#revealedDoor;
+            this.revealedDoor = getRevealedDoor();
+            return this.revealedDoor;
         }
         throw new Error("You can only pick the door for the first time once. Use change ")
     }
@@ -56,6 +56,10 @@ class Game {
         } else {
             throw new Error("Game has already ended")
         }
+    }
+
+    getPickedDoor() {
+        return this.#pickedDoor;
     }
 
     getResult() {

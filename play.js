@@ -1,4 +1,5 @@
 var game = require('./game.js');
+var utility = require('./utility.js');
 
 const readline = require('readline').createInterface({
     input: process.stdin,
@@ -29,7 +30,7 @@ readline.question("Which door do you choose?", door => {
     }
     let ref = ["A", "B", "C"];
     console.log(`Behind the following door there is a goat behind: ${ref[revealed]}, you chose the door ${ref[chosen]}`);
-    let otherDoor = [game.Doors.A, game.Doors.B, game.Doors.C].filter(numbers => numbers !== chosen && numbers !== revealed)[0];
+    let otherDoor = utility.getThirdDoor(chosen, revealed);
     readline.question(`Do you wish to change the door to ${ref[otherDoor]}`, answer => {
         if(answer === "yes") {
             activeGame.changeDoor(otherDoor);
